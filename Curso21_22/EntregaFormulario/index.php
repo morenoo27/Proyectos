@@ -16,3 +16,5 @@ if (isset($_POST["enviar"]) && !$errores) {
 
     require "vistas/formulario.php"; //nos vamos al formularios
 }
+
+//HOLA BUENAS
