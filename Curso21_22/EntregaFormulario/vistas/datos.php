@@ -34,7 +34,8 @@
         echo "<p><b>No se han seleccionado aficiones</b></p>";
     }
 
-    if (isset($_POST["coment"])) {
+    /*antes lo que pasaba era que preguntaba si estaba inicializado, lo que tenia que depurar era que tuviera contenido*/
+    if ($_POST["coment"] != "") {
         echo "<p><b>El comentario enviado ha sido:</b></p>";
         echo "<p>" . $_POST["coment"] . "</p>";
     } else {

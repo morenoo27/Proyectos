@@ -65,50 +65,30 @@ if (isset($_POST["enviar"])) {
         <label>Aficiones: </label>
 
         <label for="dep"> Deportes</label>
-        <input type="checkbox" name="afic[]" id="dep" value="Deportes"
+        <input type="checkbox" name="afic[]" id="dep" value="Deportes" 
         <?php
+            //hecho a mi manera
             if (isset($_POST["afic"])) {
-                for ($i=0; $i < count($_POST["afic"]); $i++) { 
-                    if (($_POST["afic"][$i])=="Deportes") {
-                        echo"checked";
+                for ($i = 0; $i < count($_POST["afic"]); $i++) {
+                    if (($_POST["afic"][$i]) == "Deportes") {
+                        echo "checked";
                     }
                 }
             }
-            
         ?>>
 
         <label for="lec"> Lectura</label>
-        <input type="checkbox" name="afic[]" id="lec" value="Lectura"
-        <?php
-            if (isset($_POST["afic"])) {
-                for ($i=0; $i < count($_POST["afic"]); $i++) { 
-                    if (($_POST["afic"][$i])=="Lectura") {
-                        echo"checked";
-                    }
-                }
-            }
-            
-        ?>>
+        <?php //manera mas eficinete, ya que se realiza en una sola linea y es como si hiciera un for buscando ese valor en el array ?>
+        <input type="checkbox" name="afic[]" id="lec" value="Lectura" <?php if (isset($_POST["afic"]) && in_array("Lectura", $_POST["afic"])) echo "checked"; ?>>
 
         <label for="otro"> Otros</label>
-        <input type="checkbox" name="afic[]" id="otro" value="Otros"
-        <?php
-            if (isset($_POST["afic"])) {
-                for ($i=0; $i < count($_POST["afic"]); $i++) { 
-                    if (($_POST["afic"][$i])=="Otros") {
-                        echo"checked";
-                    }
-                }
-            }
-            
-        ?>>
+        <input type="checkbox" name="afic[]" id="otro" value="Otros" <?php if (isset($_POST["afic"]) && in_array("Otros", $_POST["afic"])) echo "checked"; ?>>
 
         <br />
 
         <label for="com">Comentarios: </label>
-        <textarea name="coment" id="com" cols="30" rows="10">
-            <?php if (isset($_POST["coment"])) echo $_POST["coment"] ?>
-        </textarea>
+        <!-- esto tiene que estar en una linea, que sino, no sale cmo deberia -->
+        <textarea name="coment" id="com" cols="30" rows="10"><?php if (isset($_POST["coment"])) echo $_POST["coment"] ?></textarea>
 
         <br />
 
