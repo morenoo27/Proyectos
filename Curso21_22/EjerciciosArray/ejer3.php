@@ -13,7 +13,9 @@
 
     foreach ($v as $posicion => $valor) {
 
-        echo "<p>" . $valor . "</p>";
+        if ($valor != 0) {
+            echo "<p>En el mes de " . $posicion . " has visto " . $valor . " peliculas</p>";
+        }
     }
     ?>
 </body>
