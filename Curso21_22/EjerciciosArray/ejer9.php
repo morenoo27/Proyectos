@@ -1,8 +1,3 @@
-<?php
-//propuesta, intentar realiar esta tabla de forma estructurada
-$lenguajesPropuesta = array("lenguajes_cliente" => array("JS" => "JavaScript", "HTML" => "HyperText Markup Language"), "lenguajes_servidor" => array("PHP" => "Hypertext Preprocessor", "MYSQL" => "My Structured Query Language"));
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,13 +30,6 @@ $lenguajesPropuesta = array("lenguajes_cliente" => array("JS" => "JavaScript", "
         }
         ?>
     </table>
-
-    <br><br>
-    <h4>Propuesta personal</h4>
-    <p>Con el array :<br>
-        <?php echo print_r($lenguajesPropuesta) ?>
-    </p>
-    <p>Hacer una tabla organizada</p>
 </body>
 
 </html>
