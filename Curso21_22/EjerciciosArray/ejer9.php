@@ -1,29 +1,47 @@
+<?php
+//propuesta, intentar realiar esta tabla de forma estructurada
+$lenguajesPropuesta = array("lenguajes_cliente" => array("JS" => "JavaScript", "HTML" => "HyperText Markup Language"), "lenguajes_servidor" => array("PHP" => "Hypertext Preprocessor", "MYSQL" => "My Structured Query Language"));
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Ejercicio 8</title>
+    <title>Ejercicio 9</title>
 </head>
 
 <body>
     <?php
-    $lenguajes = array("lenguajes_cliente" => array("JavaScript", "html", "css"), "lenguajes_servidor" => array("PHP", "MySQL"));
-    ?>
+    $lenguaje_cliente = array("JS" => "JavaScript", "HTML" => "HyperText Markup Language");
+    $lenguajes_servidor = array("PHP" => "Hypertext Preprocessor", "MYSQL" => "My Structured Query Language");
+    $lenguajes;
 
+    //meto uno en el array
+    $lenguajes = $lenguaje_cliente;
+
+    //añado el otro array
+    foreach ($lenguajes_servidor as $inicial => $nombre) {
+        $lenguajes[$inicial] = $nombre;
+    }
+    ?>
     <table border="1">
         <tr>
-            <th colspan="2">Lenguajes</th>
+            <th>Lenguajes</th>
         </tr>
-        <tr>
-            <th>Lenguaje cliente</th>
-            <th>Lenguaje servidor</th>
-        </tr>
-        <tr>
-            <td>Html</td>
-            <td>PHP</td>
-        </tr>
+        <?php
+        foreach ($lenguajes as $inicial => $nombre) {
+            echo "<tr><td>$nombre</td></tr>";
+        }
+        ?>
     </table>
+
+    <br><br>
+    <h4>Propuesta personal</h4>
+    <p>Con el array :<br>
+        <?php echo print_r($lenguajesPropuesta) ?>
+    </p>
+    <p>Hacer una tabla organizada</p>
 </body>
 
 </html>
