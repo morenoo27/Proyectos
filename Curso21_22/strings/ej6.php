@@ -1,8 +1,18 @@
 <?php
+
+const ACENTUADAS = ["Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
+const NOACENTUADAS = ["A", "E", "I", "O", "U", "a", "e", "i", "o", "u"];
+
 if (isset($_POST["comparar"])) {
 
-    $error = $_POST["numero"] == "";
+    $error = $_POST["frase"] == "" | is_numeric($_POST["frase"]);
 }
+
+function reemplazarAcentuadas($frase)
+{
+    return str_replace(ACENTUADAS, NOACENTUADAS, $frase);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,14 +48,15 @@ if (isset($_POST["comparar"])) {
         <form action="ej.php" method="post">
             <h2>Ripios-Formulario</h2>
             <p>
-                <label for="numero">Dime un numero en arabe y lo paso a romano :</label>
-                <input type="text" name="numero" id="numero" value="<?php if (isset($_POST["numero"]) && $error) echo $_POST["numero"] ?>">
+                <label for="frase">Dime una frase y le quitare los acentos:</label><br>
+                <textarea name="frase" id="frase" cols="30" rows="10"><?php if (isset($_POST["frase"]) && $error) echo $_POST["frase"] ?></textarea>
                 <?php
                 if (isset($_POST["comparar"]) && $error) {
-                    if ($_POST["numero"] == "") {
+                    if ($_POST["frase"] == "") {
 
                         echo "<label style='color:red;'>*Campo vacio*</label>";
                     } else {
+                        echo "<label style='color:red;'>*Lo que has escrito no es una frase*</label>";
                     }
                 }
                 ?>
@@ -61,7 +72,8 @@ if (isset($_POST["comparar"])) {
     if (isset($_POST["comparar"]) && !$error) {
         echo "<div class='respuesta'>";
         echo "<h2>Ripios-Respuesta</h2>";
-
+        echo "<p>".$_POST["frase"]."</p>";
+        echo "<p>".reemplazarAcentuadas($_POST["frase"])."</p>";
         echo "</div>";
     }
     ?>

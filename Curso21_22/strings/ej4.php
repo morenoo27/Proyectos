@@ -1,6 +1,6 @@
 <?php
 
-const LETRASPERMITIDAS = ["M", "D", "C", "L", "X", "V", "I"];
+const LETRASPERMITIDAS = ["M" => 1000, "D" => 500, "C" => 100, "L" => 50, "X" => 10, "V" => 5, "I" => 1];
 
 if (isset($_POST["comparar"])) {
 
@@ -15,7 +15,7 @@ function isCorrect(String $textoRomano)
 function letrasBien(String $texto)
 {
     for ($i = 0; $i < strlen($texto) - 1; $i++) {
-        if (!in_array($texto[$i], LETRASPERMITIDAS)) {
+        if (!isset(LETRASPERMITIDAS[$texto[$i]])) {
             return false;
         }
     }
@@ -24,34 +24,35 @@ function letrasBien(String $texto)
 
 function ordenBien(String $texto)
 {
-    for ($i = 0; $i < strlen($texto) - 2; $i++) {
+    for ($i = 0; $i < strlen($texto) - 1; $i++) {
 
-        if (!esMayorOIgual($texto, $i)) {
+        if (LETRASPERMITIDAS[$texto[$i]] < LETRASPERMITIDAS[$texto[$i + 1]]) {
             return false;
         }
     }
     return true;
 }
 
-function esMayorOIgual($texto, $indice)
-{
-    $letra = "";
-    $i = 0;
-    for ($i; $i < count(LETRASPERMITIDAS); $i++) {
-        if (LETRASPERMITIDAS[$i] == $texto[$indice]) {
-            $letra = LETRASPERMITIDAS[$i];
-            break;
-        }
-    }
-
-    if ($texto[$indice + 1] == LETRASPERMITIDAS[$i]) {
-        # code...
-    }
-}
-
 function menosDe4(String $texto)
 {
-    # code...
+    /*Creamos un array  con la veces que se puede repetir*/
+    $veces["M"] = 4;
+    $veces["D"] = 1;
+    $veces["C"] = 4;
+    $veces["L"] = 1;
+    $veces["X"] = 4;
+    $veces["V"] = 1;
+    $veces["I"] = 4;
+
+    /*La condiciones comun a todos: cuando uno llege a -1, no esta bien repetido*/
+    for ($i = 0; $i < strlen($texto); $i++) {
+
+        $veces[$texto[$i]]--;
+        if ($veces[$texto[$i]] == -1) {
+            return false;
+        }
+    }
+    return true;
 }
 ?>
 <!DOCTYPE html>
@@ -97,7 +98,15 @@ function menosDe4(String $texto)
 
                         echo "<label style='color:red;'>*Campo vacio*</label>";
                     } else {
-                        echo "<label style='color:red;'>*No has escrito bien el numero romano*</label>";
+                        if (!letrasBien(strtoupper($_POST["palabra1"]))) {
+                            echo "<label style='color:red;'>*Las letras no estan bien escritas*</label>";
+                        }
+                        if (!ordenBien(strtoupper($_POST["palabra1"]))) {
+                            echo "<label style='color:red;'>*No esta ordenado*</label>";
+                        }
+                        if (!menosDe4(strtoupper($_POST["palabra1"]))) {
+                            echo "<label style='color:red;'>*Se repiten mas de lo permitido*</label>";
+                        }
                     }
                 }
                 ?>
@@ -113,6 +122,20 @@ function menosDe4(String $texto)
     if (isset($_POST["comparar"]) && !$errorPalabra1) {
         echo "<div class='respuesta'>";
         echo "<h2>Ripios-Respuesta</h2>";
+        $valor["M"] = 1000;
+        $valor["D"] = 500;
+        $valor["C"] = 100;
+        $valor["L"] = 50;
+        $valor["X"] = 10;
+        $valor["V"] = 5;
+        $valor["I"] = 1;
+
+        $resultado = 0;
+
+        foreach ($_POST["palabra1"] as $letra) {
+            $resultado += LETRASPERMITIDAS[strtoupper($letra)];
+        }
+        echo "<p>El numero" . $_POST["palabra1"] . " es " . $resultado . " en arabe</p>";
         echo "</div>";
     }
     ?>
