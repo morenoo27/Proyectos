@@ -19,7 +19,7 @@
     <form action="index.php" method="post" enctype="multipart/form-data">
 
         <label for="name">Nombre:</label><br>
-        <input type="text" name="nombre" id="name" placeholder="Nombre..." <?php if (isset($_POST["enviar"]) && !$errorNombre) echo "value='" . $_POST["nombre"] . "'"; ?>>
+        <input type="text" name="nombre" id="name" placeholder="Nombre..." <?php if (isset($_POST["enviar"])) echo "value='" . $_POST["nombre"] . "'"; ?>>
         <?php if ($errorNombre) {
             echo "<label class='error'>*Campo obligatorio*</label>";
         } ?>
@@ -27,7 +27,7 @@
         <br><br>
 
         <label for="user">Usario:</label><br>
-        <input type="text" name="usuario" id="user" placeholder="Usuario..." <?php if (isset($_POST["enviar"]) && !$errorUsuario) echo "value='" . $_POST["usuario"] . "'"; ?>>
+        <input type="text" name="usuario" id="user" placeholder="Usuario..." <?php if (isset($_POST["enviar"])) echo "value='" . $_POST["usuario"] . "'"; ?>>
         <?php if ($errorUsuario) {
             echo "<label class='error'>*Campo obligatorio*</label>";
         } ?>
