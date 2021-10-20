@@ -1,12 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejrcicio6</title>
-</head>
-<body>
-    
-</body>
+<html>
+  <head>
+    <title>EJERCICIO 6 FORMULARIOS</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+
+    <?php
+      $correcto=true;
+
+    ?>
+
+    <form action="ejer6.php" method="post">
+
+    <input type="number" id="eu" name="euros" placeholder="Introduce euros..." value="<?php
+      if(isset($_POST['euros'])){echo $_POST['euros']; }
+    ?>"/>
+
+    <?php
+
+      if(isset($_POST['euros']) && $_POST['euros'] == 0)
+      {
+        echo "* CAMPO OBLIGATORIO *";
+        $correcto=false;
+      }
+
+
+
+    ?>
+
+    <input type="submit" name="enviar" value="Calcular pesetas"/>
+
+  </form>
+
+
+  <?php
+    if(isset($_POST['enviar']) && $correcto)
+    {
+      echo $_POST['euros']." EUROS SON: ".$_POST['euros']*166 ." PESETAS.";
+    }
+  ?>
+
+
+
+
+
+
+    </form>
+
+  </body>
+
+
+
+
+
 </html>
