@@ -3,6 +3,26 @@
 //maximo de numeros que se pueden desplazar en el encriptado
 define("LETRASABECEDARIO",  ord("Z") - ord("A"));
 
+function encriptar($texto, $desplazamiento)
+{
+    $mensajeEncriptado = "";
+
+    for ($i = 0; $i < strlen($texto); $i++) {
+        if (ord($texto[$i]) >= ord("A") && ord($texto[$i]) <= ord("Z")) {
+            if (ord($texto[$i]) + $desplazamiento > ord("Z")) {
+                //- todas las treas - 1 por que letrasabecedario es la resta desde al z hasta la a, no es la longitud entera
+                $mensajeEncriptado .= chr(ord($texto[$i]) + $desplazamiento - LETRASABECEDARIO - 1);
+            } else {
+                $mensajeEncriptado .= chr(ord($texto[$i]) + $desplazamiento);
+            }
+        } else {
+            $mensajeEncriptado .= $texto[$i];
+        }
+    }
+
+    return $mensajeEncriptado;
+}
+
 function mensajeIncorrecto(string $texto)
 {
     $incorrecto = false;
@@ -83,22 +103,8 @@ if (isset($_POST['encriptar'])) {
 
         $texto = $_POST["mensaje"];
         $desplazamiento = $_POST["desplazamiento"];
-        $mensajeEncriptado = "";
-
-        for ($i = 0; $i < strlen($texto); $i++) {
-            if (ord($texto[$i]) >= ord("A") && ord($texto[$i]) <= ord("Z")) {
-                if (ord($texto[$i]) + $desplazamiento > ord("Z")) {
-                    //- todas las treas - 1 por que letrasabecedario es la resta desde al z hasta la a, no es la longitud entera
-                    $mensajeEncriptado .= chr(ord($texto[$i]) + $desplazamiento - LETRASABECEDARIO - 1);
-                } else {
-                    $mensajeEncriptado .= chr(ord($texto[$i]) + $desplazamiento);
-                }
-            } else {
-                $mensajeEncriptado .= $texto[$i];
-            }
-        }
-
-        echo "El mensaje: <br> $mensajeEncriptado <br> Pertenece al mensaje: <br> $texto <br> Con desplazamiento $desplazamiento";
+        
+        echo "El mensaje: <br>" . encriptar($texto, $desplazamiento) . " <br> Pertenece al mensaje: <br> $texto <br> Con desplazamiento $desplazamiento";
     }
     ?>
 </body>

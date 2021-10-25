@@ -1,4 +1,32 @@
 <?php
+function isSubcadena($texto, $cadenaABuscar)
+{
+	for ($i = 0; $i <= strlen($texto) - strlen($cadenaABuscar); $i++) {
+
+		$igual = false; //lo inicializo a false
+
+		if ($texto[$i] == $cadenaABuscar[0]) { //si ambas son iguales, es candidata
+			$igual = true;
+
+			for ($j = 0; $j < strlen($cadenaABuscar); $j++) { //recorremos la longitud de la palabra
+				//si son iguales no pasara nada
+				if ($texto[$i + $j] != $cadenaABuscar[$j]) {
+					//si salta que son diferentes las letrtas comprobadas, salta "false" y termina el bucle
+					$igual = false;
+					break;
+				}
+			}
+		}
+		//cuando termian el bucle, si todo a sidop igual sera true, por lo tanto terminara el for principal
+		if ($igual) return true;
+
+		//ultima posicion donde podemos buscar, si no ha salido del bucle, significa que no es subcadena
+		if ($i == strlen($texto) - strlen($cadenaABuscar)) return false;
+
+		//sino vuelta a empezar hasta que termine el texto
+	}
+}
+
 if (isset($_POST["comprobar"])) {
 	$errorTexto = $_POST["texto"] == "";
 	$errorSubcadena = $_POST["subcadena"] == "" || strlen($_POST["subcadena"]) > strlen($_POST["texto"]);
@@ -50,29 +78,7 @@ if (isset($_POST["comprobar"])) {
 	<?php
 	if (isset($_POST["comprobar"]) && !$errores) {
 
-		for ($i = 0; $i <= strlen($_POST["texto"]) - strlen($_POST["subcadena"]); $i++) {
-
-			$igual = false; //lo inicializo a false
-
-			if ($_POST["texto"][$i] == $_POST["subcadena"][0]) { //si ambas son iguales, es candidata
-				$igual = true;
-
-				for ($j = 0; $j < strlen($_POST["subcadena"]); $j++) { //recorremos la longitud de la palabra
-					//si son iguales no pasara nada
-					if ($_POST["texto"][$i + $j] != $_POST["subcadena"][$j]) {
-						//si salta que son diferentes las letrtas comprobadas, salta "false" y termina el bucle
-						$igual = false;
-						break;
-					}
-				}
-			}
-			//cuando termian el bucle, si todo a sidop igual sera true, por lo tanto terminara el for principal
-			if ($igual) break;
-
-			//sino vuelta a empezar hasta que termine el texto
-		}
-
-		if ($igual) echo "Es cadena";
+		if (isSubcadena($_POST["texto"], $_POST["subcadena"])) echo "Es cadena";
 		else echo "No es subcadena";
 	}
 	?>
