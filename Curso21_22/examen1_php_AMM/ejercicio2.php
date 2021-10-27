@@ -46,16 +46,12 @@ if (isset($_POST["subir"])) {
     <?php
     if (isset($_POST["subir"]) && !$error) {
         
-
-        $_FILES["archivo"]["name"]="archivo";
-        echo $_FILES["archivo"]["tmp_name"]."<br>";
-        //mirar
-        $fd = move_uploaded_file($_FILES["archivo"]["tmp_name"], "Ficheros");
+        $fd = move_uploaded_file($_FILES["archivo"]["tmp_name"], "Ficheros/archivo.txt");
         if (!$fd) {
             die("No se puede subir el archivo");
         }
 
-        echo "Archivo subido a la carpeta Ficheros";
+        echo "Archivo subido a la carpeta <i>Ficheros</i>";
     }
     ?>
 </body>

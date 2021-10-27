@@ -2,6 +2,11 @@
 if (isset($_POST["contar"])) {
     $errores = $_POST["texto"] == "";
 }
+
+function miExplode($sep, $texto)
+{
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
