@@ -28,9 +28,8 @@ if (isset($_POST["subir"])) {
         <h2>No se ha encontrado el archivo <i>Horario/horarios.txt</i></h2>
         <form action="ejercicio4.php" method="post" enctype="multipart/form-data">
             <p>
-            <p>
                 <label for="archivo">Introduce un archivo: (No mayor de 1MB)</label> <br>
-                <input type="file" name="archivo" id="archivo">
+                <input type="file" name="archivo" id="archivo" accept=".txt">
                 <?php
                 if (isset($_POST["subir"]) && $error) {
                     if ($_FILES["archivo"]["type"] != "text/plain") {
@@ -51,22 +50,56 @@ if (isset($_POST["subir"])) {
             <p>
                 <button type="submit" name="subir">Subir fichero</button>
             </p>
-            </p>
         </form>
 
         <?php
         if (isset($_POST["subir"]) && !$error) {
             echo "No se ha podido subir el archivo";
         }
-        ?>
-
-    <?php
     } else {    ?>
         <h2>Horario de los profesores</h2>
 
-        <label for="profesores">Horario del profesor:</label>
+        <form action="ejercicio4.php" method="post">
+            <p>
+                <label for="profesores">Horario del profesor:</label>
+                <select name="profesor" id="profesores">
+                    <?php
+                    while (!feof($fd)) {
+                        $linea = fgets($fd);
+                        $valores = explode("\t", $liena);
+                        if (isset($_POST["profesor"]) && $valores[0] == $_POST["profesor"]) {
+                            echo "<option value='" . $valores[0] . "' selected>" . $valores[0] . "</option>";
+                        } else {
+                            echo "<option value='" . $valores[0] . "'>" . $valores[0] . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <button type="submit" name="verHorario">Ver horario</button>
+            </p>
+        </form>
     <?php
+
+        if (isset($_POST["verHorario"])) {
+            $hora = ["", "8:15 - 9:15", "9:15 - 10:15", "10:15 - 11:15", "11:15 - 11:45", "11:45 - 12:15", "12:45 - 13:45", "13:45 - 14:45"];
+            echo $_POST["profesor"];
+            echo "<table border='1'>";
+            echo "<tr>";
+            echo "<th></th><th>Lunes</th><th>Martes</th><th>Miercoles</th><th>Jueves</th><th>Viernes</th>";
+            echo "</tr>";
+            for ($i = 1; $i <= 7; $i++) {
+                echo "<th>" . $hora[$i] . "</th>";
+            }
+            echo "</table>";
+        }
+
+        fclose($fd);
     } ?>
+
+
+
+
+
 </body>
 
 </html>
