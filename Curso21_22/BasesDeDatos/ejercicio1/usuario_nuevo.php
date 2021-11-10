@@ -1,32 +1,6 @@
 <?php
 
-function estaEnUso($conexion, $nombreABuscar)
-{
-    $consulta = "select * from usuarios where usuario='" . $nombreABuscar . "'";
-    $resultado = mysqli_query($conexion, $consulta);
-
-    if ($resultado) {
-        //miramos las tuplas que ha tenido la query, si tiene 0, ese nombre es valuido, sino no es valido
-        $respuesta = mysqli_num_rows($resultado) > 0;
-        mysqli_free_result($resultado);
-        return $respuesta;
-    } else {
-        $respuesta["error"] = "imposible realizar la consutla. Error Nº: " . mysqli_errno($conexion) . ": " . mysqli_error($conexion);
-        return $respuesta;
-    }
-}
-
-require "src/config.php";
-
-@$conexion = mysqli_connect(SERVIDOR_BD, NOMBRE_USUARIO, "hola", NOMBRE_BD);
-if (!$conexion) {
-
-    $errorConexionBD = true;
-} else {
-    $errorConexionBD = false;
-
-    mysqli_set_charset($conexion, "utf8");
-}
+require "funciones.php";
 
 if (isset($_POST["registrarse"])) {
 
@@ -37,18 +11,63 @@ if (isset($_POST["registrarse"])) {
     // si no esta vacio, comprobamos si esta en uso
     // si esta vacio no hace falta mirar que dicho campo este repetido en la base de datos
     if (!$errorUsuario) {
-        $errorUsuario = estaEnUso($conexion, $_POST["nombreUsuario"]);
 
-        if (is_array($errorUsuario)) {
-            //hubo un error en la consulta
-            $errorConexionUsuario = true;
+        //conectamos con la base de datos
+        require "src/config.php";
+
+        @$conexion = mysqli_connect(SERVIDOR_BD, NOMBRE_USUARIO, CLAVE, NOMBRE_BD);
+        //miramos si ha conectado
+        if (!$conexion) {
+
+            $errorConexionBD = true;
         } else {
-            $errorConexionUsuario = false;
+            //sino, tambien comprobamos el usuario, y si dicha consulta ha dado error
+            $errorConexionBD = false;
+
+            mysqli_set_charset($conexion, "utf8");
+
+            $errorUsuario = estaEnUso($conexion, "usuarios", "usuario", $_POST["nombreUsuario"]);
+
+            if (is_array($errorUsuario)) {
+                //hubo un error en la consulta
+                $errorConexionUsuario = true;
+            } else {
+                $errorConexionUsuario = false;
+            }
         }
     }
 
     $errorPass = $_POST["password"] == "";
     $errorEmail = $_POST["email"] == "" || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+
+    if (!$errorEmail) {
+        //comprobamos lo mismo que en usuario, pero controlando si esta activa la conexion antes de todo
+        if (!isset($conexion)) {
+
+            //conectamos con la base de datos
+            require "src/config.php";
+
+            @$conexion = mysqli_connect(SERVIDOR_BD, NOMBRE_USUARIO, CLAVE, NOMBRE_BD);
+            //miramos si ha conectado
+            if (!$conexion) {
+                $errorConexionBD = true;
+            } else {
+                $errorConexionBD = false;
+            }
+        }
+
+        if (!$errorConexionBD) {
+
+            $errorEmail = estaEnUso($conexion, "ususarios", "email", $_POST["email"]);
+
+            if (is_array($errorEmail)) {
+                //hubo un error en la consulta
+                $errorConexionEmail = true;
+            } else {
+                $errorConexionEmail = false;
+            }
+        }
+    }
 
     $errores = $errorNombre || $errorUsuario || $errorPass || $errorEmail;
 }
@@ -71,12 +90,6 @@ if (isset($_POST["registrarse"])) {
 </head>
 
 <body>
-    <?php
-    if ($errorConexionBD) {
-        echo "<span class='error'>*Imposible conectar. Error número: " . mysqli_connect_errno() .
-            " : " . mysqli_connect_error() . "*</span>";
-    }
-    ?>
     <form action="usuario_nuevo.php" method="post">
         <p>
             <label for="nombre">Nombre:</label> <br>
@@ -94,7 +107,7 @@ if (isset($_POST["registrarse"])) {
             <?php
             if (isset($_POST["registrarse"])) {
                 //miramos si tiene relacion con un error en la conexion
-                if (!$errorConexionUsuario) {
+                if (!$errorConexionBD) {
                     //no tiene que ver con la conexion
                     if ($errorUsuario) {
                         if ($_POST["nombreUsuario"] == "") {
@@ -104,7 +117,12 @@ if (isset($_POST["registrarse"])) {
                         }
                     }
                 } else {
-                    echo "<span class='error'>*Fallo en la conexion a la base de datos para registrar dicho ususario*</span>";
+                    if ($errorConexionBD) {
+                        echo "<span class='error'>*Imposible conectar. Error número: " . mysqli_connect_errno() .
+                            " : " . mysqli_connect_error() . "*</span>";
+                    } else {
+                        echo "<span class='error'>*Fallo en la conexion a la base de datos para registrar dicho ususario*</span>";
+                    }
                 }
             }
             ?>
@@ -126,14 +144,14 @@ if (isset($_POST["registrarse"])) {
                 if ($_POST["email"] == "") {
                     echo "<span class='error'>*Campo obligatorio*</span>";
                 } else {
-                    echo "<span class='error'>*Emain no valido*</span>";
+                    echo "<span class='error'>*Email no valido*</span>";
                 }
             }
             ?>
         </p>
 
-        <?php 
-            
+        <?php
+
         ?>
 
         <button type="submit" name="registrarse">Continuar</button>

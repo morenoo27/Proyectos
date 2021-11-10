@@ -32,7 +32,7 @@ require "src/config.php";
             margin: 0 auto;
         }
 
-        .centarFormulario{
+        .centarFormulario {
             width: 60%;
             margin: 1.5rem auto;
         }
@@ -47,8 +47,8 @@ require "src/config.php";
     @$conexion = mysqli_connect(SERVIDOR_BD, NOMBRE_USUARIO, CLAVE, NOMBRE_BD);
     if (!$conexion) {
 
-        die("Imposible conectar. Error número: " . mysqli_connect_errno() .
-            " : " . mysqli_connect_error());
+        die("<p>Imposible conectar. Error número: " . mysqli_connect_errno() .
+            " : " . mysqli_connect_error() . "</p></body></html>");
     }
 
     mysqli_set_charset($conexion, "utf8");
@@ -56,7 +56,7 @@ require "src/config.php";
     $consulta = "select * from usuarios";
     $resultado = mysqli_query($conexion, $consulta);
     ?>
-    
+
     <table>
         <tr>
             <th>Nombre de ususario</th>
