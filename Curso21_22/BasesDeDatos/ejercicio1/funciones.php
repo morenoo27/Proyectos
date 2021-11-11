@@ -27,7 +27,10 @@ function salto_con_POST($ruta, $name)
     echo "</body></html>";
 }
 
-function error_page($title, $body)
+/**
+ * Funcion que genera una pagina web mostrando un error que haya ocurrido en la ejecucion de la pagina
+ */
+function error_page(string $title, string $body)
 {
     return '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $title . '</title></head><body>' . $body . '</body></html>';;
 }
