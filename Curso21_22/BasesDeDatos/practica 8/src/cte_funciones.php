@@ -3,6 +3,7 @@ define("SERVIDOR_BD", "localhost");
 define("USUARIO_BD", "jose");
 define("CLAVE_BD", "josefa");
 define("NOMBRE_BD", "bd_cv");
+define("RUTANOIMAGEN", "imagenes/no_imagen.jpg");
 
 function error_page($title, $body)
 {
@@ -27,4 +28,42 @@ function repetido($conexion, $tabla, $columna, $valor_colum, $primary_key = null
         $respuesta["error"] = "Imposible realizar la consulta. Nº" . mysqli_errno($conexion) . " : " . mysqli_error($conexion);
 
     return $respuesta;
+}
+
+function isValid($dniCompleto)
+{
+    if (strlen($_POST["dniCREAR"]) == 9) {
+        $dni = substr($dniCompleto, 0, 8);
+        $letra = strtoupper(substr($dniCompleto, -1));
+
+        //si la letra es numerica, significa que no es una letra sino un numero(no hay letra)
+        if ($letra >= "A" && $letra <= "Z") {
+            $letraCorrespondiente = substr("TRWAGMYFPDXBNJZSQVHLCKEO", $dni % 23, 1);
+            return $letra == $letraCorrespondiente; //determianmos si el dni es correcto
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
+
+function salto_con_POST($ruta, $name)
+{
+    echo "<html><body onload='document.form_post.submit();'>";
+    echo "<form action='" . $ruta . "' method='post' name='form_post'><input type='hidden' name='" . $name . "' value=''/></form>";
+    echo "</body></html>";
+}
+
+function insertarUsuario(\mysqli $conexion, string $usuario, string $nombre, string $clave, string $sexo, string $dni)
+{
+    //creamos y ejecutamos query
+    $consulta = "INSERT INTO usuarios (usuario, clave, nombre, dni, sexo) values ('$usuario', '$clave', '$nombre', '$sexo', '$dni')";
+    $respuesta = mysqli_query($conexion, $consulta);
+    //si se ejecuta correctamente saltamos a index de manera normal
+    if ($respuesta) {
+        mysqli_close($conexion);
+        salto_con_POST("index.php", "insertado");
+    } else {
+        die(error_page("FALLO EN LA INSERCION", "Fallo nº:" . mysqli_connect_errno($conexion) . ": " . mysqli_connect_error($conexion)));
+    }
 }
