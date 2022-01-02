@@ -1,0 +1,17 @@
+#mensaje_bienvenida_con_salir {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+#mensaje {
+    width: 93%;
+}
+
+#espacio {
+    color: white;
+}
+
+#boton {
+    text-align: right;
+}
