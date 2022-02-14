@@ -58,7 +58,7 @@
             echo "<td>$horas[$i]</td>";
             for ($j = 1; $j < count($dias); $j++) {
                 if ($i == 0) {
-                    echo "<td>$dias[$j]</td>";
+                    echo "<th>$dias[$j]</th>";
                 } elseif ($i == 4) {
                     echo "<td colspan='5'>RECREO</td>";
                     break;
