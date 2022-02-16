@@ -16,6 +16,5 @@ if (isset($obj->mensaje)) {
     echo "<p><strong>Nombre Corto: </strong>" . $obj->producto->nombre_corto . "</p>";
     echo "<p><strong>Descripción: </strong>" . $obj->producto->descripcion . "</p>";
     echo "<p><strong>PVP: </strong>" . $obj->producto->PVP . "€</p>";
-    echo "<p><strong>Familia: </strong>" . $obj->producto->familia . "</p>";
+    echo "<p><strong>Familia: </strong>" . $obj->producto->nombre_familia . "</p>";
 }
-?>

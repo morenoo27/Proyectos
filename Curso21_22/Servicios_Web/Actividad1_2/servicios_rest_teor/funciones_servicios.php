@@ -30,7 +30,7 @@
             $respuesta["error"] = "Imposible conectar. Error Nº: ".mysqli_connect_errno().": ".mysqli_connect_error();
         }else{
             mysqli_set_charset($conexion, 'utf-8');
-            $consulta = "select * from producto where cod='".$cod."'";
+            $consulta = "SELECT producto.*, familia.nombre as nombre_familia from producto join familia on producto.familia=familia.cod where producto.cod='".$cod."'";
             $resultado = mysqli_query($conexion, $consulta);
             if($resultado){
                 if(mysqli_num_rows($resultado) > 0){
@@ -147,4 +147,3 @@
         }
         return $respuesta;
     }
-?>
