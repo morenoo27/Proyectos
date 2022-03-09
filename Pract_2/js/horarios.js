@@ -42,7 +42,7 @@ function obtener_vista_normal(id_usuario, nombre_usuario) {
         } else if (data.horario) {
 
             let output = "<h2>Horario del profesor: " + nombre_usuario + "</h2>";
-            output += "<table >";
+            output += "<table class='table table-dark'>";
 
             //dias dinamico
             output += "<tr>"
@@ -437,7 +437,33 @@ function add_grupo(dia, hora, id_usuario) {
     }).done(function (data) {
 
         if (!data.profesor || id_usuario != data.profesor[0].usuario) {
-            if (data.ocupada && data.profesor[0].grupo != grupos[0]) {
+
+            //BUCLE PARA COMPROBAR TODOS LOS REGISTROS QUE COINCIDEN
+            let i = 0
+
+            //FLAG
+            let condicion = false
+
+            do {
+
+                //CONTROL DE EFICIENCIA
+                if (data.profesor !== undefined) {
+
+                    //CONDICION
+                    if (data.profesor[i].grupo == grupos[0]) {
+
+                        condicion = true
+                        break;
+                    }
+
+                    i++
+                } else {
+                    break
+                }
+            } while (data.profesor[i]);
+            //MIENTRAS QUE EXISTA UN REGISTRO
+
+            if (data.ocupada && !condicion) {
 
                 let profesores = [];
                 let grupos_prof = [];
@@ -488,8 +514,9 @@ function add_grupo(dia, hora, id_usuario) {
 
                 let existia = false;
 
+
                 for (const profe of profesores) {
-                    
+
                     if (id_usuario == profe) {
                         existia = true
                         break

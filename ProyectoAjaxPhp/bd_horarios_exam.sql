@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Base de datos: `bd_horarios_exam`
 --
 
+CREATE DATABASE `bd_horarios_exam`;
+USE `bd_horarios_exam`;
+
 -- --------------------------------------------------------
 
 --
