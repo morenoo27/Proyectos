@@ -484,7 +484,7 @@ function add_grupo(dia, hora, id_usuario) {
                     html_code += "</p>";
                 }
 
-                html_code += `<p class='centrar'><button onclick='cerrar_modal();'>Cancelar</button> <button onclick='cambiar_aula("${dia}", "${hora}","${profesores}","${id_usuario}","${data.profesor[0].nombre_grupo}");event.preventDefault();'>Cambiar</button></p>`;
+                html_code += `<p class='centrar'><button class='btn btn-light' onclick='cerrar_modal();'>Cancelar</button> <button class='btn btn-dark' onclick='cambiar_aula("${dia}", "${hora}","${profesores}","${id_usuario}","${data.profesor[0].nombre_grupo}");event.preventDefault();'>Cambiar</button></p>`;
 
                 let existia = false;
 
@@ -700,7 +700,7 @@ function cambiar_aula(dia, hora, id_usuarios_antiguos, id_usuario, aula) {
     });
 
     html_code += "</select> </p>";
-    html_code += `<p class='centrar'><button onclick='cerrar_modal();'>Cancelar</button> <button onclick='confirmar_cambio_aula("${dia}","${hora}","${id_usuarios_antiguos}","${id_usuario}");event.preventDefault();'>Cambiar</button></p>`;
+    html_code += `<p class='centrar'><button class='btn btn-light' onclick='cerrar_modal();'>Cancelar</button> <button class='btn btn-dark' onclick='confirmar_cambio_aula("${dia}","${hora}","${id_usuarios_antiguos}","${id_usuario}");event.preventDefault();'>Cambiar</button></p>`;
 
     abrir_modal(html_code);
 }
