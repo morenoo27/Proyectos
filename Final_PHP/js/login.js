@@ -109,9 +109,6 @@ function cargar_vista_oportuna(usuario) {
         obtener_vista_normal(usuario["id_usuario"], usuario["nombre"]);
 }
 
-
-
-
 function cargar_vista_login(error) {
     $('#error').html("");
     $('#vista_oportuna').removeClass("visible");
@@ -123,14 +120,11 @@ function cargar_vista_login(error) {
     var html_code = "<form id='login' onsubmit='hacer_login();event.preventDefault();'>";
     html_code += "<p><label for='usuario'>Usuario: </label></br><input type='text' id='usuario' required/></p>";
     html_code += "<p><label for='clave'>Contraseña: </label></br><input type='password' id='clave' required/></p>";
-    html_code += "<p><button>Login</button></p>";
+    html_code += "<p><button class='btn btn-dark'>Login</button></p>";
     html_code += "<p id='error_login'>" + error + "</p>";
     html_code += "</form>";
     $('#vista_login').html(html_code);
 }
-
-
-
 
 function MD5(string) {
 
@@ -332,8 +326,6 @@ function MD5(string) {
 
     return temp.toLowerCase();
 }
-
-
 
 function error_ajax_jquery(jqXHR, textStatus) {
     var respuesta;

@@ -42,7 +42,7 @@ function obtener_vista_normal(id_usuario, nombre_usuario) {
         } else if (data.horario) {
 
             let output = "<h2>Horario del profesor: " + nombre_usuario + "</h2>";
-            output += "<table >";
+            output += "<table class='table table-dark'>";
 
             //dias dinamico
             output += "<tr>"
@@ -437,13 +437,39 @@ function add_grupo(dia, hora, id_usuario) {
     }).done(function (data) {
 
         if (!data.profesor || id_usuario != data.profesor[0].usuario) {
-            if (data.ocupada && data.profesor[0].grupo != grupos[0]) {
+
+            //BUCLE PARA COMPROBAR TODOS LOS REGISTROS QUE COINCIDEN
+            let i = 0
+
+            //FLAG
+            let condicion = false
+
+            do {
+
+                //CONTROL DE EFICIENCIA
+                if (data.profesor !== undefined) {
+
+                    //CONDICION
+                    if (data.profesor[i].grupo == grupos[0]) {
+
+                        condicion = true
+                        break;
+                    }
+
+                    i++
+                } else {
+                    break
+                }
+            } while (data.profesor[i]);
+            //MIENTRAS QUE EXISTA UN REGISTRO
+
+            if (data.ocupada && !condicion) {
 
                 let profesores = [];
                 let grupos_prof = [];
 
                 let html_code = "<h2 class='centrar'>Confirmación Cambio de Aula del " + DIAS[dia] + " a " + hora + "º Hora</h2>";
-                html_code += "<p class='centrar'>Has seleccionado un aula que está usada por el profesor (";
+                html_code += "<p class='centrar'>Esta aula está usada por el/los profesor/es (";
 
                 if (data.profesor.length == 1) {
 
@@ -484,16 +510,16 @@ function add_grupo(dia, hora, id_usuario) {
                     html_code += "</p>";
                 }
 
-                html_code += `<p class='centrar'><button onclick='cerrar_modal();'>Cancelar</button> <button onclick='cambiar_aula("${dia}", "${hora}","${profesores}","${id_usuario}","${data.profesor[0].nombre_grupo}");event.preventDefault();'>Cambiar</button></p>`;
+                html_code += `<p class='centrar'><button class='btn btn-light' onclick='cerrar_modal();'>Cancelar</button> <button class='btn btn-dark' onclick='cambiar_aula("${dia}", "${hora}","${profesores}","${id_usuario}","${data.profesor[0].nombre_grupo}");event.preventDefault();'>Cambiar</button></p>`;
 
                 let existia = false;
 
-                for (let i = 0; i < profesores.length; i++) {
 
-                    if (id_usuario == profesores[i]) {
+                for (const profe of profesores) {
 
-                        existia = true;
-                        break;
+                    if (id_usuario == profe) {
+                        existia = true
+                        break
                     }
                 }
 
@@ -700,7 +726,7 @@ function cambiar_aula(dia, hora, id_usuarios_antiguos, id_usuario, aula) {
     });
 
     html_code += "</select> </p>";
-    html_code += `<p class='centrar'><button onclick='cerrar_modal();'>Cancelar</button> <button onclick='confirmar_cambio_aula("${dia}","${hora}","${id_usuarios_antiguos}","${id_usuario}");event.preventDefault();'>Cambiar</button></p>`;
+    html_code += `<p class='centrar'><button class='btn btn-light' onclick='cerrar_modal();'>Cancelar</button> <button class='btn btn-dark' onclick='confirmar_cambio_aula("${dia}","${hora}","${id_usuarios_antiguos}","${id_usuario}");event.preventDefault();'>Cambiar</button></p>`;
 
     abrir_modal(html_code);
 }
