@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+.oculta {
+    display: none
+}
+
+.visible {
+    display: block
+}
+
+.enlace {
+    border: none;
+    background: none;
+    text-decoration: underline;
+    color: aqua;
+    cursor: pointer;
+}
+
+table, td, th {
+    text-align: center;
+}
+
+.centrar {
+    text-align: center;
+}
+
+header {
+    height: 10%;
+    max-height: 10%;
+}
+
+img {
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    padding: 1rem 0.5rem;
+}
+
+#vista_login {
+    margin-top: 25%;
+    margin-bottom: 25%;
+    width: 50%;
+    height: 10rem;
+    border-radius: 6px;
+    background-color: gray;
+}
+
+#login {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+#login>p {
+    width: 90%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#login>p>label {
+    align-self: flex-start;
+    margin-left: 1%;
+}
+
+#login>p>input {
+    align-self: flex-start;
+    width: 100%;
+}
+
+#login>p>button {
+    padding: 0.5rem 1rem;
+    font-size: x-large;
+    border: none;
+    border-radius: 6px;
+}
+
+#vista_oportuna {
+    width: 100%;
+    padding: 5% 0 5% 0;
+    background-color: #CCC;
+}
+
+#horario {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 2%;
+}
+
+#editar_horario {
+    margin-top: 2%;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#editar_horario>h2 {
+    flex-basis: 100%;
+    align-self: center;
+}
+
+#mensaje {
+    flex-basis: 100%;
+}
