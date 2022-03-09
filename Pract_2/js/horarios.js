@@ -488,12 +488,11 @@ function add_grupo(dia, hora, id_usuario) {
 
                 let existia = false;
 
-                for (let i = 0; i < profesores.length; i++) {
-
-                    if (id_usuario == profesores[i]) {
-
-                        existia = true;
-                        break;
+                for (const profe of profesores) {
+                    
+                    if (id_usuario == profe) {
+                        existia = true
+                        break
                     }
                 }
 
