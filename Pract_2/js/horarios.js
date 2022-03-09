@@ -469,7 +469,7 @@ function add_grupo(dia, hora, id_usuario) {
                 let grupos_prof = [];
 
                 let html_code = "<h2 class='centrar'>Confirmación Cambio de Aula del " + DIAS[dia] + " a " + hora + "º Hora</h2>";
-                html_code += "<p class='centrar'>Has seleccionado un aula que está usada por el profesor (";
+                html_code += "<p class='centrar'>Esta aula está usada por el/los profesor/es (";
 
                 if (data.profesor.length == 1) {
 
